@@ -59,20 +59,20 @@ export async function PUT(
       return new NextResponse("Status is required", { status: 400 });
     }
 
-    let dataDate: any;
+    let data: any;
 
     if (status === "packed") {
-      dataDate = {
+      data = {
         delivery_status: "packed",
         packed_at: new Date(),
       };
     } else if (status === "shipped") {
-      dataDate = {
+      data = {
         delivery_status: "shipped",
         shipped_at: new Date(),
       };
     } else if (status === "delivered") {
-      dataDate = {
+      data = {
         delivery_status: "delivered",
         delivered_at: new Date(),
       };
@@ -82,7 +82,7 @@ export async function PUT(
       where: {
         id: params.id,
       },
-      data: dataDate,
+      data,
     });
 
     return NextResponse.json(order);
