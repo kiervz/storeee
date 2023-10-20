@@ -1,0 +1,332 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  role          String     @default("CUSTOMER")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  Customer      Customer[]
+  Order         Order[]
+  Cart          Cart[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Customer {
+  id String @id @default(uuid())
+
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  mobile_number String?
+  gender        String?
+  address_1     String?
+  address_2     String?
+  province      String?
+  city          String?
+  zip_code      String?
+  country       String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+
+  @@index([userId])
+}
+
+model VerificationRequest {
+  id         String   @id @default(uuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  name       String
+  slug       String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  Size       Size[]
+  Product    Product[]
+}
+
+model Size {
+  id String @id @default(uuid())
+
+  category             Category               @relation(fields: [categoryId], references: [id])
+  categoryId           String
+  name                 String
+  slug                 String
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @default(now())
+  ProductVariationSize ProductVariationSize[]
+
+  @@index([categoryId])
+}
+
+model Brand {
+  id         String    @id @default(uuid())
+  name       String
+  slug       String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  Product    Product[]
+}
+
+model Color {
+  id               String             @id @default(uuid())
+  name             String
+  slug             String
+  hexValue         String
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @default(now())
+  ProductVariation ProductVariation[]
+}
+
+model Product {
+  id String @id @default(uuid())
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  brand   Brand  @relation(fields: [brandId], references: [id])
+  brandId String
+
+  name        String
+  slug        String
+  description String  @db.MediumText
+  is_post     Boolean @default(false)
+  is_feature  Boolean @default(false)
+
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @default(now())
+  deleted_at       DateTime?
+  ProductVariation ProductVariation[]
+  OrderItem        OrderItem[]
+  Cart             Cart[]
+
+  @@index([categoryId])
+  @@index([brandId])
+}
+
+model ProductVariation {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  color   Color  @relation(fields: [colorId], references: [id])
+  colorId String
+
+  sku          String
+  unit_price   Decimal
+  discount     Decimal
+  actual_price Decimal
+
+  created_at            DateTime                @default(now())
+  updated_at            DateTime                @default(now())
+  ProductVariationSize  ProductVariationSize[]
+  ProductVariationImage ProductVariationImage[]
+  OrderItem             OrderItem[]
+  Cart                  Cart[]
+
+  @@index([productId])
+  @@index([colorId])
+}
+
+model ProductVariationSize {
+  id String @id @default(uuid())
+
+  productVariation    ProductVariation @relation(fields: [product_variationId], references: [id])
+  product_variationId String
+
+  size   Size   @relation(fields: [sizeId], references: [id])
+  sizeId String
+
+  quantity Int
+
+  created_at DateTime    @default(now())
+  updated_at DateTime    @default(now())
+  OrderItem  OrderItem[]
+  Cart       Cart[]
+
+  @@index([product_variationId])
+  @@index([sizeId])
+}
+
+model ProductVariationImage {
+  id String @id @default(uuid())
+
+  productVariation    ProductVariation @relation(fields: [product_variationId], references: [id])
+  product_variationId String
+
+  name String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([product_variationId])
+}
+
+model Order {
+  id String @id @default(uuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  status       String
+  total_amount Decimal
+  type         String
+  sessionId    String
+
+  packed_at    DateTime?
+  shipped_at   DateTime?
+  delivered_at DateTime?
+  cancel_at    DateTime?
+
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+  OrderItem   OrderItem[]
+  OrderRefund OrderRefund[]
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  productVariation    ProductVariation @relation(fields: [product_variationId], references: [id])
+  product_variationId String
+
+  productVariationSize     ProductVariationSize @relation(fields: [product_variation_sizeId], references: [id])
+  product_variation_sizeId String
+
+  price       Decimal
+  quantity    Int
+  total_price Decimal
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([product_variationId])
+  @@index([product_variation_sizeId])
+}
+
+model CancelReason {
+  id   String @id @default(uuid())
+  code String
+  name String
+
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+  OrderRefund OrderRefund[]
+}
+
+model OrderRefund {
+  id String @id @default(uuid())
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  cancelReason    CancelReason @relation(fields: [cancel_reasonId], references: [id])
+  cancel_reasonId String
+
+  reason   String
+  refundId String
+  note     String?
+  amount   Decimal
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([orderId])
+  @@index([cancel_reasonId])
+}
+
+model Cart {
+  id String @id @default(uuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  productVariation    ProductVariation @relation(fields: [product_variationId], references: [id])
+  product_variationId String
+
+  productVariationSize     ProductVariationSize @relation(fields: [product_variation_sizeId], references: [id])
+  product_variation_sizeId String
+
+  quantity    Int
+  status      String
+  is_selected Boolean @default(false)
+
+  @@index([userId])
+  @@index([productId])
+  @@index([product_variationId])
+  @@index([product_variation_sizeId])
+}
