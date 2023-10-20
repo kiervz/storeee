@@ -13,11 +13,12 @@ interface SidebarProps {
 
 const links = [
   { id: 1, name: "Dashboard", link: "/", icon: LayoutDashboard },
-  { id: 2, name: "Products", link: "/products", icon: LayoutDashboard },
-  { id: 3, name: "Brands", link: "/brands", icon: LayoutDashboard },
-  { id: 4, name: "Categories", link: "/categories", icon: LayoutDashboard },
-  { id: 5, name: "Colors", link: "/colors", icon: LayoutDashboard },
-  { id: 6, name: "Sizes", link: "/sizes", icon: LayoutDashboard },
+  { id: 2, name: "Orders", link: "/orders", icon: LayoutDashboard },
+  { id: 3, name: "Products", link: "/products", icon: LayoutDashboard },
+  { id: 4, name: "Brands", link: "/brands", icon: LayoutDashboard },
+  { id: 5, name: "Categories", link: "/categories", icon: LayoutDashboard },
+  { id: 6, name: "Colors", link: "/colors", icon: LayoutDashboard },
+  { id: 7, name: "Sizes", link: "/sizes", icon: LayoutDashboard },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {

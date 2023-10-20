@@ -1,8 +1,10 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { getServerSession } from "next-auth";
-import SessionProvider from "@/app/components/session-provider";
+
+import SessionProvider from "@/app/providers/session-provider";
+import { ToastProvider } from "@/app/providers/toast-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +23,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
+          <ToastProvider />
           <main className="w-full h-full">{children}</main>
         </SessionProvider>
       </body>
