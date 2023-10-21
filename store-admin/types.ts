@@ -40,20 +40,29 @@ export interface OrderProductType {
 export interface OrderProductVariationType {
   id: string;
   color: Color;
-  size: Omit<Size, "id">;
+  size: Omit<SizeType, "id">;
   sku: string;
   unit_price: number;
   discount: number;
   quantity: number;
 }
 
-export interface Size {
+export interface SizeType {
   id: string;
   categoryId: string;
+  category: Category;
   name: string;
   slug: string;
   created_at: Date;
   updated_at: Date;
 }
 
-export interface Color extends Omit<Size, "id"> {}
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface Color extends Omit<SizeType, "id"> {}

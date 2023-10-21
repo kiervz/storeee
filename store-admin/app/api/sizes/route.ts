@@ -13,8 +13,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-
-    const { name } = body;
+    const { name, categoryId } = body;
 
     if (!user) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -24,18 +23,36 @@ export async function POST(req: Request) {
       return new NextResponse("Name is required", { status: 400 });
     }
 
-    const category = await prisma.category.create({
-      data: {
-        name,
+    if (!categoryId) {
+      return new NextResponse("Category name is required", { status: 400 });
+    }
+
+    const sizedata = await prisma.size.findFirst({
+      where: {
+        categoryId,
         slug: slugify(name, {
           lower: true,
         }),
       },
     });
 
-    return NextResponse.json(category);
+    if (sizedata) {
+      return new NextResponse("Size name already exist.", { status: 400 });
+    }
+
+    const size = await prisma.size.create({
+      data: {
+        name,
+        slug: slugify(name, {
+          lower: true,
+        }),
+        categoryId,
+      },
+    });
+
+    return NextResponse.json(size);
   } catch (error) {
-    console.log("[CATEGORIES_POST]", error);
+    console.log("[SIZE_POST]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
@@ -48,15 +65,18 @@ export async function GET(req: Request) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    const categories = await prisma.category.findMany({
+    const sizes = await prisma.size.findMany({
       orderBy: {
         created_at: "desc",
       },
+      include: {
+        category: true,
+      },
     });
 
-    return NextResponse.json(categories);
+    return NextResponse.json(sizes);
   } catch (error) {
-    console.log("[CATEGORIES_GET]", error);
+    console.log("[SIZE_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

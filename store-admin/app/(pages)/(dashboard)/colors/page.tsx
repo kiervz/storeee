@@ -2,7 +2,7 @@ import { Color } from "@prisma/client";
 
 import prisma from "@/app/lib/prismadb";
 import Pagination from "@/app/components/pagination";
-import ColorTable from "./components/order-table";
+import ColorTable from "./components/color-table";
 import ToolBar from "./components/toolbar";
 
 interface ColumnsProps {

@@ -2,7 +2,7 @@ import { Brand } from "@prisma/client";
 
 import prisma from "@/app/lib/prismadb";
 import Pagination from "@/app/components/pagination";
-import BrandTable from "./components/order-table";
+import BrandTable from "./components/brand-table";
 import ToolBar from "./components/toolbar";
 
 interface ColumnsProps {

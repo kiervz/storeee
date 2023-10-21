@@ -1,20 +1,20 @@
-import { Category } from "@prisma/client";
+import { Category, Size } from "@prisma/client";
 
 import prisma from "@/app/lib/prismadb";
 import Pagination from "@/app/components/pagination";
-import CategoryTable from "./components/category-table";
+import SizeTable from "./components/size-table";
 import ToolBar from "./components/toolbar";
 
 interface ColumnsProps {
   label: string;
-  value: keyof Category;
+  value: keyof Size;
   isSort: boolean;
   className?: string;
 }
 
 interface SearchParamsProps {
   searchParams: {
-    orderBy: keyof Category;
+    orderBy: keyof Size;
     sort: "desc" | "asc";
     page: string;
   };
@@ -22,6 +22,7 @@ interface SearchParamsProps {
 
 const CategoryPage = async ({ searchParams }: SearchParamsProps) => {
   const columns: ColumnsProps[] = [
+    { label: "Category", value: "categoryId", isSort: true },
     { label: "Name", value: "name", isSort: true },
     { label: "Slug", value: "slug", isSort: true },
     {
@@ -35,28 +36,27 @@ const CategoryPage = async ({ searchParams }: SearchParamsProps) => {
   const page = parseInt(searchParams.page) || 1;
   const pageSize = 10;
 
-  const categories = await prisma.category.findMany({
+  const sizes = await prisma.size.findMany({
     orderBy: {
       [searchParams.orderBy]: searchParams.sort,
+    },
+    include: {
+      category: true,
     },
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
 
-  const categoryCount = await prisma.category.count();
+  const sizeCount = await prisma.size.count();
 
   return (
     <div className="flex justify-normal flex-col gap-4">
       <ToolBar />
-      <CategoryTable
-        columns={columns}
-        categories={categories}
-        searchParams={searchParams}
-      />
+      <SizeTable columns={columns} sizes={sizes} searchParams={searchParams} />
       <Pagination
         currentPage={page}
         pageSize={pageSize}
-        itemCount={categoryCount}
+        itemCount={sizeCount}
       />
     </div>
   );
