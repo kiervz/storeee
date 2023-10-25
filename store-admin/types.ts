@@ -66,3 +66,64 @@ export interface Category {
 }
 
 export interface Color extends Omit<SizeType, "id"> {}
+
+export interface ValueType {
+  id: string;
+  name: string;
+  slug: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface VariationImages {
+  id: string;
+  product_variationId: string;
+  name: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface ProductVariationSizes {
+  id: string;
+  product_variationId: string;
+  sizeId: string;
+  size: ValueType;
+  quantity: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface Variations {
+  id: string;
+  productId: string;
+  colorId: string;
+  // color: ValueType;
+  sku: string;
+  unit_price: any;
+  discount: any;
+  actual_price: any;
+  // ProductVariationImage: VariationImages[];
+  // ProductVariationSize: ProductVariationSizes[];
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface ProductType {
+  id: string;
+  category: ValueType;
+  categoryId: string;
+  brand: ValueType;
+  brandId: string;
+  name: string;
+  slug: string;
+  description: string;
+  is_post: boolean;
+  is_feature: boolean;
+  ProductVariation: Variations[];
+  _count: {
+    ProductVariation: number;
+  };
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date | null;
+}
