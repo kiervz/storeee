@@ -31,29 +31,14 @@ const Loading = () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-normal w-full gap-x-2">
-        <div
-          className={cn({
-            "opacity-100 md:block md:w-2/12": true,
-            // "hidden opacity-0": !true,
-          })}
-        >
-          <div
-            className={cn("flex flex-col gap-2", {
-              "w-full h-screen overflow-y-auto justify-between items-center ":
-                true,
-            })}
-          >
+        <div className="hidden opacity-0 md:opacity-100 md:block md:w-2/12">
+          <div className="flex flex-col gap-2 w-full h-screen overflow-y-auto justify-between items-center">
             {[0, 1, 2, 3].map((item) => (
               <LoadingItem item={item} key={item} />
             ))}
           </div>
         </div>
-        <div
-          className={cn({
-            "w-full md:w-10/12": true,
-            // "w-full": !openFilter,
-          })}
-        >
+        <div className="w-full md:w-10/12">
           <div className="space-y-4">
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
               {[0, 1, 2, 3, 4, 5].map((item) => (

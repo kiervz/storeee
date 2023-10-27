@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { Brand, Category, Color } from "@prisma/client";
 import { Check } from "lucide-react";

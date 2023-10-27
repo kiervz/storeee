@@ -1,5 +1,3 @@
-import React from "react";
-
 import prisma from "@/app/lib/prismadb";
 import ShopClient from "./components/client";
 

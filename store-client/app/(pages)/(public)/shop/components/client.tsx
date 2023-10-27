@@ -2,18 +2,18 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Brand, Category, Color } from "@prisma/client";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Settings2 } from "lucide-react";
 
 import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
-import { Settings2 } from "lucide-react";
 import { ReactCombobox } from "@/app/components/ui/react-combobox";
 import { sortsData } from "../page";
+import { ProductType } from "@/types";
 import Container from "@/app/components/container";
 import FilterClient from "./filter";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FilterMobileMode from "./filter-mobile-mode";
 import ProductList from "./product-list";
-import { ProductType } from "@/types";
 
 interface ShopClientProps {
   categories: Category[];

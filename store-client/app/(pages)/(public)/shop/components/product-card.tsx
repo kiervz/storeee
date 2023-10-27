@@ -4,11 +4,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Product } from "@/types";
+import { ProductType } from "@/types";
 import { FormatCurrency } from "@/app/lib/format";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductType;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {

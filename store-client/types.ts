@@ -102,8 +102,8 @@ export interface Variations {
   unit_price: any;
   discount: any;
   actual_price: any;
-  // ProductVariationImage: VariationImages[];
-  // ProductVariationSize: ProductVariationSizes[];
+  ProductVariationImage: VariationImages[];
+  ProductVariationSize: ProductVariationSizes[];
   created_at: Date;
   updated_at: Date;
 }

@@ -1,5 +1,7 @@
-import { motion, AnimatePresence } from "framer-motion";
+"use client";
+
 import { X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Brand, Category, Color } from "@prisma/client";
 
 import { Button } from "@/app/components/ui/button";
