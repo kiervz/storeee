@@ -127,3 +127,43 @@ export interface ProductType {
   updated_at: Date;
   deleted_at: Date | null;
 }
+
+export interface Cart {
+  id: string;
+  userId: string;
+  productId: string;
+  product_variationId: string;
+  product_variation_sizeId: string;
+  quantity: number;
+  status: string;
+  is_selected: boolean;
+  total_amount: number;
+  product: CartProduct;
+  productVariation: CartProductVariation;
+  productVariationSize: CartProductVariationSizes;
+}
+
+export interface CartProduct {
+  id: string;
+  category: ValueType;
+  brand: ValueType;
+  name: string;
+  slug: string;
+  description: string;
+}
+
+export interface CartProductVariation {
+  id: string;
+  color: Color;
+  sku: string;
+  unit_price: number;
+  discount: number;
+  actual_price: number;
+  ProductVariationImage: VariationImages[];
+}
+
+export interface CartProductVariationSizes {
+  slug: string;
+  quantity: number;
+  size: SizeType;
+}
