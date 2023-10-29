@@ -2,11 +2,9 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prismadb";
 import getCurrentUser from "@/app/actions/get-current-user";
 import OrderDetailClient from "./_components/client";
-import delay from "delay";
 
 const OrderPage = async ({ params }: { params: { id: string } }) => {
   const user = await getCurrentUser();
-  await delay(4000);
 
   if (!user) {
     return new NextResponse("Unauthenticated", { status: 403 });
