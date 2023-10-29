@@ -1,4 +1,5 @@
 import { OrderType } from "@/types";
+import { Order } from "@prisma/client";
 import dayjs from "dayjs";
 
 export const FormatCurrency = (
@@ -49,7 +50,7 @@ export const FormatDateTime = (
   return dayjs(value).format(format);
 };
 
-export const DeliveryStatus = (order: OrderType) => {
+export const DeliveryStatus = (order: Order) => {
   if (order.delivered_at) {
     return "Delivered";
   } else if (order.shipped_at) {
