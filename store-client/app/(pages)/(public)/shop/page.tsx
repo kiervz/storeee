@@ -1,21 +1,12 @@
 import prisma from "@/app/lib/prismadb";
 import ShopClient from "./components/client";
 
-export const dataByPrice = [
+const dataByPrice = [
   { id: "all-price", value: [0, 10000000], label: "All Prices" },
   { id: "under-3k", value: [0, 3000], label: "Under ₱ 3,000" },
   { id: "from-3k-to-6k", value: [3001, 6000], label: "₱ 3,001 - ₱ 6,000" },
   { id: "from-6k-to-12k", value: [6001, 12000], label: "₱ 6,001 - ₱ 12,000" },
   { id: "over-12k", value: [12001, 10000000], label: "Over 12,000" },
-];
-
-export const dataSaleOffers = [{ value: "sale", label: "Sale" }];
-
-export const sortsData = [
-  { value: "latest-arrival", label: "Latest Arrival" },
-  { value: "featured", label: "Featured" },
-  { value: "high-low", label: "Price: High Low" },
-  { value: "low-high", label: "Price: Low High" },
 ];
 
 interface SearchParamsProps {

@@ -8,10 +8,9 @@ import { Settings2 } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
 import { ReactCombobox } from "@/app/components/ui/react-combobox";
-import { sortsData } from "../page";
 import { ProductType } from "@/types";
 import Container from "@/app/components/container";
-import FilterClient from "./filter";
+import FilterClient, { sortsData } from "./filter";
 import FilterMobileMode from "./filter-mobile-mode";
 import ProductList from "./product-list";
 
