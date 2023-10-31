@@ -1,3 +1,10 @@
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+}
+
 export interface OrderType {
   id: string;
   user_id: string;
@@ -10,6 +17,7 @@ export interface OrderType {
   delivered_at: string;
   cancel_at: string;
   created_at: string;
+  user: User;
   OrderItem: OrderItemType[];
   OrderRefund: OrderRefundType[];
 }

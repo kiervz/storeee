@@ -31,7 +31,7 @@ const StatusFilter = () => {
   let status = searchParams.get("status");
 
   return (
-    <div className="flex items-center space-x-4 w-auto">
+    <div className="flex items-center gap-4 w-auto">
       <p className="text-sm text-muted-foreground">Status</p>
       <Select
         onValueChange={(status) => {

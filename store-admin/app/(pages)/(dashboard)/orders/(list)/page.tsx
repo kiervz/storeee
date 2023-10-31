@@ -4,6 +4,8 @@ import Pagination from "@/app/components/pagination";
 import ToolBar from "./components/toolbar";
 import { DeliveryStatus, Order } from "@prisma/client";
 
+import delay from "delay";
+
 interface ColumnsProps {
   label: string;
   value: keyof Order;
@@ -63,12 +65,13 @@ const OrderPage = async ({ searchParams }: SearchParamsProps) => {
   });
 
   const orderCount = await prisma.order.count();
+
   return (
     <div className="flex justify-normal flex-col gap-4">
       <ToolBar />
       <OrderTable
         columns={columns}
-        orders={orders}
+        orders={JSON.parse(JSON.stringify(orders))}
         searchParams={searchParams}
       />
       <Pagination
