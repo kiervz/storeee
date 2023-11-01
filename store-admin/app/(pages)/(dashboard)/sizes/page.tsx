@@ -1,9 +1,10 @@
-import { Category, Size } from "@prisma/client";
+import { Size } from "@prisma/client";
 
 import prisma from "@/app/lib/prismadb";
 import Pagination from "@/app/components/pagination";
 import SizeTable from "./components/size-table";
 import ToolBar from "./components/toolbar";
+import delay from "delay";
 
 interface ColumnsProps {
   label: string;
@@ -48,7 +49,7 @@ const CategoryPage = async ({ searchParams }: SearchParamsProps) => {
   });
 
   const sizeCount = await prisma.size.count();
-
+  await delay(4000);
   return (
     <div className="flex justify-normal flex-col gap-4">
       <ToolBar />

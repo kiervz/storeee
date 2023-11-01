@@ -75,8 +75,6 @@ export const ModalSize = ({ initialData, isOpen, onClose }: ModalSizeProps) => {
       toast.success(toastMessage);
       onClose();
     } catch (error: any) {
-      console.log({ error });
-
       toast.error(error.response.data);
     } finally {
       setLoading(false);
