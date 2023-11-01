@@ -2,8 +2,9 @@ import { Product } from "@prisma/client";
 
 import prisma from "@/app/lib/prismadb";
 import Pagination from "@/app/components/pagination";
-import BrandTable from "./components/brand-table";
-import ToolBar from "./components/toolbar";
+import ProductTable from "../components/product-table";
+import ToolBar from "../components/toolbar";
+import delay from "delay";
 
 interface ColumnsProps {
   label: string;
@@ -88,11 +89,11 @@ const ProductPage = async ({ searchParams }: SearchParamsProps) => {
   });
 
   const productCount = await prisma.product.count();
-
+  await delay(4000);
   return (
     <div className="flex justify-normal flex-col gap-4">
       <ToolBar />
-      <BrandTable
+      <ProductTable
         columns={columns}
         products={JSON.parse(JSON.stringify(products))}
         searchParams={searchParams}

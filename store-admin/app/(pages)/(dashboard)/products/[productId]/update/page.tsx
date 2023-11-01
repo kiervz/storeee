@@ -1,6 +1,6 @@
 import prisma from "@/app/lib/prismadb";
 import { redirect } from "next/navigation";
-import UpdateProductClient from "../../components/add-update-product-client";
+import AddUpdateProductClient from "../../components/add-update-product-client";
 
 const UpdateProductPage = async ({
   params,
@@ -100,7 +100,7 @@ const UpdateProductPage = async ({
   });
 
   return (
-    <UpdateProductClient
+    <AddUpdateProductClient
       product={formattedProduct}
       brands={brands}
       categories={categories}

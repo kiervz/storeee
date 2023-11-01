@@ -109,8 +109,6 @@ const AddUpdateProductClient: React.FC<AddUpdateProductClientProps> = ({
 
     const updatedVariationSizes = [...form.getValues().variationSizes];
 
-    console.log({ updatedVariationSizes });
-
     for (let i = 0; i < updatedVariationSizes.length; i++) {
       updatedVariationSizes[i].sizeId = "";
     }
@@ -121,7 +119,6 @@ const AddUpdateProductClient: React.FC<AddUpdateProductClientProps> = ({
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log({ values });
     try {
       setLoading(true);
       if (product) {
@@ -199,8 +196,6 @@ const AddUpdateProductClient: React.FC<AddUpdateProductClientProps> = ({
     },
     [form]
   );
-
-  console.log({ form: form.getValues() });
 
   return (
     <div className="flex flex-col gap-6">
