@@ -9,7 +9,7 @@ import {
 import { Skeleton } from "@/app/components/ui/skeleton";
 
 const Loading = () => {
-  const sizes = [1, 2, 3, 4, 5];
+  const colors = [1, 2, 3, 4, 5];
 
   return (
     <div className="flex justify-normal flex-col gap-4">
@@ -19,20 +19,15 @@ const Loading = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Category</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Slug</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="w-2/12">Date</TableHead>
-            <TableHead></TableHead>
+            <TableHead>Color</TableHead>
+            <TableHead className="w-3/12">Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {sizes.map((order) => (
-            <TableRow key={order}>
-              <TableCell>
-                <Skeleton className="w-full h-6" />
-              </TableCell>
+          {colors.map((color) => (
+            <TableRow key={color}>
               <TableCell>
                 <Skeleton className="w-full h-6" />
               </TableCell>
