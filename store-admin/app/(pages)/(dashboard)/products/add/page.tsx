@@ -1,6 +1,5 @@
 import prisma from "@/app/lib/prismadb";
 import AddUpdateProductClient from "../components/add-update-product-client";
-import delay from "delay";
 
 const AddProductPage = async () => {
   const brands = await prisma.brand.findMany();
@@ -12,7 +11,6 @@ const AddProductPage = async () => {
     },
   });
 
-  await delay(4000);
   return (
     <AddUpdateProductClient
       brands={brands}

@@ -4,8 +4,6 @@ import Pagination from "@/app/components/pagination";
 import ToolBar from "./components/toolbar";
 import { DeliveryStatus, Order } from "@prisma/client";
 
-import delay from "delay";
-
 interface ColumnsProps {
   label: string;
   value: keyof Order;
